@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Global ESP32 AR LED Control</title>
+
+  <!-- A-Frame + AR.js -->
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+</head>
+
+<body style="margin:0; overflow:hidden;">
+
+<a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+
+  <!-- Camera + Cursor -->
+  <a-entity camera>
+    <a-cursor fuse="false"></a-cursor>
+  </a-entity>
+
+  <!-- ===== MARKER 1 : LED 1 ===== -->
+  <a-marker preset="hiro">
+    <a-box id="btn1"
+           position="0 0.5 0"
+           depth="0.5"
+           height="0.5"
+           width="0.5"
+           color="red">
+    </a-box>
+
+    <a-text value="LED 1"
+            position="0 1 0"
+            color="yellow"
+            align="center">
+    </a-text>
+  </a-marker>
+
+
+  <!-- ===== MARKER 2 : LED 2 ===== -->
+  <a-marker preset="kanji">
+    <a-box id="btn2"
+           position="0 0.5 0"
+           depth="0.5"
+           height="0.5"
+           width="0.5"
+           color="blue">
+    </a-box>
+
+    <a-text value="LED 2"
+            position="0 1 0"
+            color="cyan"
+            align="center">
+    </a-text>
+  </a-marker>
+
+</a-scene>
+
+
+<script>
+/* ================= FIREBASE CONFIG ================= */
+
+var firebaseConfig = {
+  apiKey: "AIzaSyAns2SZaY2s0TpVay_4IW77YP9jGAV3RQ8",
+  databaseURL: "https://esp-ar-default-rtdb.firebaseio.com/"
+};
+
+firebase.initializeApp(firebaseConfig);
+var database = firebase.database();
+
+/* ================= LED TOGGLE FUNCTIONS ================= */
+
+function toggleLED1() {
+  database.ref("led1").once("value").then(snapshot => {
+    let current = snapshot.val() || 0;
+    database.ref("led1").set(current ? 0 : 1);
+  });
+}
+
+function toggleLED2() {
+  database.ref("led2").once("value").then(snapshot => {
+    let current = snapshot.val() || 0;
+    database.ref("led2").set(current ? 0 : 1);
+  });
+}
+
+/* ================= CLICK EVENTS ================= */
+
+document.querySelector("#btn1").addEventListener("click", toggleLED1);
+document.querySelector("#btn2").addEventListener("click", toggleLED2);
+
+</script>
+
+</body>
+</html>
