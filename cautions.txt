@@ -1,0 +1,91 @@
+🔵 Step-by-Step: Enable Anonymous Authentication
+
+Go to:
+
+👉 Firebase Console
+Open your project esp-ar
+
+✅ Step 1 — Open Authentication
+
+On the left panel:
+
+Build → Authentication
+
+If Authentication is not enabled yet, click:
+
+Get Started
+
+✅ Step 2 — Go to “Sign-in method” Tab
+
+At the top you’ll see tabs:
+
+Users
+
+Sign-in method
+
+Templates
+
+Click:
+
+👉 Sign-in method
+
+✅ Step 3 — Enable Anonymous
+
+Scroll down and find:
+
+Anonymous
+
+Click it.
+
+Then:
+
+✔ Toggle Enable
+✔ Click Save
+
+✅ That’s It
+
+Now Firebase allows ESP32 to authenticate using:
+
+Firebase.signUp(&config, &auth, "", "");
+🔥 After Enabling
+
+Upload the ESP32 code again.
+
+Serial Monitor should now show:
+
+Connected!
+Firebase SignUp OK
+LED1: 1
+LED2: 0
+
+If you don’t see “Authentication” in left menu, tell me what options you see — I’ll guide you precisely. 🚀
+
+give me final esp code
+
+Excellent 👍
+Since you have:
+
+✅ Installed Firebase ESP Client (Mobizt)
+
+✅ Database URL: https://esp-ar-default-rtdb.firebaseio.com/
+
+✅ Will enable Anonymous Authentication
+
+Here is your FINAL WORKING ESP32 CODE (2025 Correct Version)
+
+🔴 BEFORE UPLOADING
+
+Make sure:
+
+1️⃣ Anonymous Sign-In is Enabled
+
+Firebase → Authentication → Sign-in method → Anonymous → Enable
+
+2️⃣ Database Rules (for testing)
+{
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}
+
